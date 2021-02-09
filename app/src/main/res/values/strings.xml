@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Star Wars Quiz app</string>
+    <string name="quiz_title">Star Wars Quiz</string>
+    <string name="share">Share your answers!</string>
+    <string name="Rating">How would you rate this quiz?</string>
+    <string name="name_prompt">What is your Star Wars Universe Name?</string>
+    <string name="name">Input Name</string>
+    <string name="email">Email Results</string>
+    <string name="answer">Answer:</string>
+</resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="title_text_style">
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">poppins</item>
+        <item name="android:textSize">34sp</item>
+        <item name="android:color">@color/black</item>
+    </style>
+
+    <style name="questions_text_style">
+        <item name="android:paddingTop">24dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold|italic</item>
+        <item name="android:fontFamily">poppins</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="options_text_style">
+        <item name="android:padding">0dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">poppins</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="button_style">
+        <item name="android:fontFamily">poppins</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+</resources>
