@@ -19,37 +19,64 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * This app quizzes the user on how well they know their Star Wars Lore
+ * updated 10/02/2021
+ * Aniketh Rao
+ */
+
 public class MainActivity extends AppCompatActivity {
     int numberOfCorrect = 0;
+    /**
+     * Single choice MC questions
+     */
     final String[] singleChoiceQuestions = {
             "Who defeated Darth Vader?",
             "Who is Han Solo's best friend?",
             "What is Chancellor Palpatine's real identity?",
             "What is \"Baby Yoda\"'s real name?",
     };
-    //first in the string is the answer
+    /**
+     * Answer options for each of the single choice MC questions
+     * The first value of the array is the answer to the question
+     */
     final String[][] singleChoiceQuestionOptions = {
             {"Luke Skywalker", "Anikin Skywalker", "Princess Leia", "Lando Calrissian"},
             {"Chewbacca", "R2-D2", "C-3PO", "Mace Windu"},
             {"Darth Sidious", "Darth Maul", "Darth Vader", "Anikin Skywalker"},
             {"Grogu", "Little Boy", "The Child", "Jeffry"},
     };
+    /**
+     * Multiple choice questions
+     * Second question does not have a correct answer
+     */
     final String[] multipleChoiceQuestion = {
             "What colours do Jedi knights use?",
             "Which colours would you use?"
     };
-    //first value indicates how how many of the following options are the correct answers
+    /**
+     * The selection choices for the multiple choice questions
+     */
     final String[][] multipleChoiceQuestionOptions = {
             {"Blue", "Green", "Purple", "Red"},
             {"Blue", "Green", "Purple", "Red"}
     };
-    //question seven question followed by answer
+    /**
+     * Text Input questions
+     * Second array value is the correct answer to the question
+     */
     final String[][] textInputQuestions = {
             {"What planet did Yoda die?", "Dagobah"}
     };
+    /**
+     * Calculations to easily setup the size of the correct answers boolean
+     */
     final int numberOfSingleAnswerQuestions = singleChoiceQuestions.length;
     final int numberOfMultipleChoiceQuestions = multipleChoiceQuestion.length - 1;
     final int numberOfTextInputQuestions = textInputQuestions.length;
+    /**
+     * Boolean keeps track of the questions the user selects correctly or incorrectly for results display
+     */
     boolean[] correctAnswers = new boolean[numberOfSingleAnswerQuestions + numberOfMultipleChoiceQuestions + numberOfTextInputQuestions];
     SingleChoiceQuestionObject[] singleChoiceQuestionObject = {
             new SingleChoiceQuestionObject(),
@@ -61,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Inflate all views
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         TextView[] questionTextViews = {
@@ -109,19 +137,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Runs when the submit button is pressed
+     * Updates TextView "quiz_summary" with the incorrect answers
+     * @param view
+     */
     public void submit(View view) {
-        checkQuestionSix();
-        for (int i = 0; i < numberOfSingleAnswerQuestions; i++) {
-            correctAnswers[i] = singleChoiceQuestionObject[i].checkAnswer();
-            if (correctAnswers[i]) {
-                numberOfCorrect++;
-            }
-        }
-        TextView summary = (TextView) findViewById(R.id.quiz_summary);
+        TextView summary = findViewById(R.id.quiz_summary);
         this.summary = createQuizSummary();
         summary.setText(this.summary);
     }
 
+    /**
+     * Runs when the Email Results button is pressed
+     * @param view
+     */
     public void sendEmail(View view) {
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
         emailIntent.setData(Uri.parse("mailto:"));//only email should handle this
@@ -134,7 +164,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Checks Results of all questions
+     * Creates and returns a quiz summary of all the questions that were answered incorrectly
+     * @return
+     */
     private String createQuizSummary() {
+        checkQuestionSix();
+        for (int i = 0; i < numberOfSingleAnswerQuestions; i++) {
+            correctAnswers[i] = singleChoiceQuestionObject[i].checkAnswer();
+            if (correctAnswers[i]) {
+                numberOfCorrect++;
+            }
+        }
         String summaryString = checkQuestionSeven();
         if (numberOfCorrect == numberOfSingleAnswerQuestions) {
             Toast.makeText(this, "Perfect Score!", Toast.LENGTH_SHORT).show();
@@ -143,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
             String incorrectAnswers = "";
             for (int i = 0; i < correctAnswers.length; i++) {
                 if (!correctAnswers[i]) {
-                    incorrectAnswers += " Q" + Integer.toString(i + 1);
+                    incorrectAnswers += " Q" + (i + 1);
                 }
             }
             Toast.makeText(this, incorrectAnswers + " Incorrect", Toast.LENGTH_SHORT).show();
@@ -153,8 +195,10 @@ public class MainActivity extends AppCompatActivity {
         return summaryString;
     }
 
-    /*
-    Answer Checking logic
+    /**
+     * Checks Results for question one and displays toasts 
+     * Triggered by Radiobutton under RadioGroup "question_1_options"
+     * @param view
      */
     public void onRadioClickQuestionOne(View view) {
         //Referencing starts at 0
@@ -166,6 +210,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Checks Results for question two and displays toasts 
+     * Triggered by Radiobutton under RadioGroup "question_2_options"
+     * @param view
+     */
     public void onRadioClickQuestionTwo(View view) {
         //Referencing starts at 0
         int questionNumber = 1;
@@ -176,6 +225,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Checks Results for question three and displays toasts 
+     * Triggered by Radiobutton under RadioGroup "question_3_options"
+     * @param view
+     */
     public void onRadioClickQuestionThree(View view) {
         //Referencing starts at 0
         int questionNumber = 2;
@@ -186,6 +240,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Checks Results for question four and displays toasts 
+     * Triggered by Radiobutton under RadioGroup "question_4_options"
+     * @param view
+     */
     public void onRadioClickQuestionFour(View view) {
         //Referencing starts at 0
         int questionNumber = 3;
@@ -196,6 +255,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Checks Results for question five and displays toasts 
+     * Triggered by all CheckBox's under Question Five TextView
+     * @param view
+     */
     public void checkQuestionFive(View view) {
         //Referencing starts at 0
         int questionNumber = 4;
@@ -208,9 +272,15 @@ public class MainActivity extends AppCompatActivity {
         if (question5Option1CheckBox.isChecked() && question5Option2CheckBox.isChecked() && question5Option3CheckBox.isChecked() && !question5Option4CheckBox.isChecked()) {
             correctAnswers[questionNumber] = true;
             Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
-        } else correctAnswers[questionNumber] = false;
+        } else {
+            correctAnswers[questionNumber] = false;
+            Toast.makeText(this, "Incorrect!", Toast.LENGTH_SHORT).show();
+        }
     }
-
+    /**
+     * Checks Results for question six
+     * Triggered by createQuizSummary()
+     */
     private void checkQuestionSix() {
         //Referencing starts at 0
         int questionNumber = 5;
@@ -218,6 +288,10 @@ public class MainActivity extends AppCompatActivity {
         correctAnswers[questionNumber] = questionSevenAnswerEditText.getText().toString().equals(textInputQuestions[0][1]);
     }
 
+    /**
+     * Question seven has no correct answer, however affects the summary wording
+     * @return
+     */
     private String checkQuestionSeven() {
         //Check the light sabre options selected for summary building
         String summaryString = "";
@@ -245,7 +319,9 @@ public class MainActivity extends AppCompatActivity {
         return summaryString;
     }
 
-    //Object containing single choice questions with logic to check for correct answer
+    /**
+     * Object contains the information for each single choice question and logic for checking for correct answer
+     */
     private class SingleChoiceQuestionObject {
         final int NUMBER_OF_OPTIONS = 4;
         private String question;
@@ -255,11 +331,7 @@ public class MainActivity extends AppCompatActivity {
 
         public boolean checkAnswer() {
             int checkedID = optionsRadioGroup.getCheckedRadioButtonId();
-            if (checkedID == answerID) {
-                return true;
-            } else {
-                return false;
-            }
+            return checkedID == answerID;
         }
 
         public void setQuestion(String question) {
@@ -278,6 +350,11 @@ public class MainActivity extends AppCompatActivity {
             this.answerID = answerID;
         }
 
+        /**
+         * Randomly scrambles options so they do not appear in the same order every time
+         * Sets the ID of the correct answer to be able to easily check for the correct answer after user selection
+         * @param optionsRadioGroup
+         */
         public void setOptionsRadioGroup(RadioGroup optionsRadioGroup) {
             this.optionsRadioGroup = optionsRadioGroup;
             Integer[] optionOrder = {0, 1, 2, 3};
